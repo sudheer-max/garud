@@ -1,0 +1,198 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<section class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1">
+    <div class="container mt-3">
+        <h1 class="text-center">Domestic Packages</h1>
+        <ul class="list-inline text-center">
+            <li class="list-inline-item g-color-primary">
+                <a href="{% url 'umesh:home' %}" style="color: black;"><span><i class="fa fa-home"></i> Home</span></a>
+                <i class="fa fa-angle-right g-ml-7"></i>
+            </li>
+            <li class="list-inline-item g-color-primary">
+                <span>Domestic Packages</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!--================Blog Area =================-->
+<section class="blog_area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                <div class="blog_left_sidebar">
+                    <!-- Team-profile Start -->
+                    <div class="team-profile team-padding">
+                        <div class="container">
+                            <div class="row">
+                                {% for dom in queryset %}
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <div class="single-profile mb-30 bg-white">
+                                        <!-- Front -->
+                                        <div class="single-profile-front">
+                                            <div class="profile-img">
+                                                <a href="{{ dom.get_absolute_url }}"><img src="{{ dom.thumbnail.url }}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="profile-caption p-3">
+                                                <a href="#" class="badge badge-danger">{{ dom.tag }}</a>
+                                                <h4>
+                                                    <a href="{{ dom.get_absolute_url }}">{{ dom.title }}</a>
+                                                </h4>
+                                                <p class="city">Inclusion</p>
+                                                <div class="">
+                                                    <div class="row">
+                                                        {% for inclusion in dom.inclusiones.all %}
+                                                        <div class="col-4">
+                                                            <a href="#" class="badge badge-danger">{{ inclusion.title }}</a>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+
+
+                                                <p class="city">Cities</p>
+
+                                                <div class="">
+                                                    <div class="row">
+                                                        {% for domestic_city in dom.cities.all %}
+                                                        <div class="col-6">
+                                                            <p><i class="fa fa-arrow-circle-right px-2" aria-hidden="true"></i>{{ domestic_city.title }}
+                                                            </p>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <p>{{ dom.overview }}</p>
+                                                <div class="d-flex">
+                                                    <div class=""><i class="fa fa-calendar-check-o" aria-hidden="true"></i>{{ dom.timestamp|timesince }} ago</div>
+                                                    <div class="align-right mx-5"><i class="fa fa-eye" aria-hidden="true"></i>{{ dom.view_count }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team-profile End-->
+
+
+
+
+                    <nav class="blog-pagination justify-content-center d-flex">
+                        <ul class="pagination">
+                            {% if queryset.has_previous %}
+                            <li class="page-item">
+                                <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}" class="page-link" aria-label="Previous">
+                                    <i class="ti-angle-left"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li class="page-item">
+                                <a href="#" class="page-link">{{ queryset.number }}</a>
+                            </li>
+                            {% if queryset.has_next %}
+                            <li class="page-item">
+                                <a href="?{{ page_request_var }}={{ queryset.next_page_number }}" class="page-link" aria-label="Next">
+                                    <i class="ti-angle-right"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+           <div class="col-lg-4">
+    <div class="blog_right_sidebar">
+        <aside class="single_sidebar_widget search_widget">
+            <form action="{% url 'umesh:search' %}">
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <input type="text" name="q" class="form-control" placeholder='Search Keyword' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                        <div class="input-group-append">
+                            <button class="btns" type="button"><i class="ti-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+            </form>
+        </aside>
+
+        <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Inclusion</h4>
+            <ul class="list cat-list">
+                {% for domestic_inclusion in dom_inclusion_count %}
+                <li>
+                    <a href="#" class="d-flex">
+                        <p>{{ domestic_inclusion.inclusiones__title }}</p>
+                        <p>({{ domestic_inclusion.inclusiones__title__count }})</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+        <aside class="single_sidebar_widget popular_post_widget">
+            <h3 class="widget_title">Recent Post</h3>
+            {% for dom in most_recent %}
+            <div class="media post_item">
+                <img src="{{ dom.thumbnail.url }}" alt="post" style="width: 140px;">
+                <div class="media-body">
+                    <a href="{{ dom.get_absolute_url }}">
+                        <h3>{{ dom.title }}</h3>
+                    </a>
+                    <p>{{ dom.timestamp|timesince }} ago</p>
+                </div>
+            </div>
+            {% endfor %}
+        </aside>
+        <aside class="single_sidebar_widget tag_cloud_widget">
+            <h4 class="widget_title">Tag Clouds</h4>
+            <ul class="list">
+                {% for domestic in dom_tag_count %}
+                <li>
+                    <a href="#">{{ domestic.tag }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+
+        <aside class="single_sidebar_widget instagram_feeds">
+            <h4 class="widget_title">Instagram Feeds</h4>
+            <ul class="instagram_row flex-wrap">
+                {% for dom in instagram_feeds %}
+                <li>
+                    <a href="{{ dom.get_absolute_url }}">
+                        <img class="img-fluid" src="{{ dom.thumbnail.url }}" alt="">
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+
+        <aside class="single_sidebar_widget newsletter_widget">
+            <h4 class="widget_title">Newsletter</h4>
+
+            <form action="." method="POST">{% csrf_token %}
+                <div class="form-group">
+                    <input type="email" name="email" id="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                </div>
+                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Subscribe</button>
+            </form>
+        </aside>
+    </div>
+</div>
+
+        </div>
+    </div>
+</section>
+<!--================Blog Area =================-->
+
+
+
+
+{% endblock content %}

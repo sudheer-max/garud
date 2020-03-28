@@ -1,0 +1,70 @@
+<header>
+    {% load static %}
+    <!-- Header Start -->
+    <div class="header-area">
+        <div class="main-header ">
+            <div class="header-top top-bg d-none d-lg-block">
+                <div class="container-fluid">
+                    <div class="col-xl-12">
+                        <div class="row d-flex justify-content-between align-items-center">
+                            <div class="header-info-left">
+                                <ul>
+                                    <li><i class="fas fa-map-marker-alt"></i>Shop No.3, Sai Siddhi Varsha Tower, Sheetal Nagar, Station Road, Mira Road (E), Thane - 401107</li>
+                                    <li><i class="fas fa-envelope"></i>garudtravels2012@gmail.com</li>
+                                </ul>
+                            </div>
+                            <div class="header-info-right">
+                                <ul class="header-social">
+                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="https://www.facebook.com/garudtravels.in/"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li> <a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-bottom  header-sticky">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <!-- Logo -->
+                        <div class="col-xl-1 col-lg-1 col-md-1">
+                            <div class="logo">
+                                <a href="{% url 'umesh:home' %}"><img src="{% static 'img/logo.png' %}" style="width: 180px; padding-right: 10px;" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10 col-md-10">
+                            <!-- Main-menu -->
+                            <div class="main-menu f-right d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="{% url 'umesh:home' %}">Home</a></li>
+                                        <li><a href="{% url 'umesh:domestic' %}">Domestic Packages</a></li>
+                                        <li><a href="{% url 'umesh:international' %}">International Pacakges</a></li>
+                                        <li><a href="{% url 'umesh:hotel' %}">Hotel Packages</a></li>
+                                        <li><a href="#">Rental</a>
+                                            <ul class="submenu">
+                                                <li><a href="{% url 'umesh:bus' %}">Bus Rental</a></li>
+                                                <li><a href="{% url 'umesh:car' %}">Car Rental</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="{% url 'contact:contact' %}">Contact</a>
+
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+</header>

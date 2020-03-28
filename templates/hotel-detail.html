@@ -1,0 +1,196 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<section class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1">
+    <div class="container mt-3">
+        <h1 class="text-center">{{ hotel.title }}</h1>
+        <ul class="list-inline text-center">
+            <li class="list-inline-item g-color-primary">
+                <a href="{% url 'umesh:home' %}" style="color: black;"><span><i class="fa fa-home"></i> Home</span></a>
+                <i class="fa fa-angle-right g-ml-7"></i>
+            </li>
+            <li class="list-inline-item g-color-primary">
+                <a href="{% url 'umesh:hotel' %}" style="color: black;"><span> Hotel Packages</span></a>
+                <i class="fa fa-angle-right g-ml-7"></i>
+            </li>
+            <li class="list-inline-item g-color-primary">
+                <span>{{ hotel.title }}</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!--================Blog Area =================-->
+<section class="blog_area single-post-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 posts-list">
+                <div class="single-post">
+                    <div class="feature-img">
+                        <img src="{{ hotel.thumbnail.url }}" alt="" style="width: 100%;">
+                    </div>
+                    <div class="blog_details">
+                        <h4 href="#" class="badge badge-danger">{{ hotel.tag }}</h4>
+                        <h2>{{ hotel.title }}
+                        </h2>
+                        {% for inclusion in hotel.inclusiones.all %}
+                        <div class="">
+                            <h4 href="#" class="badge badge-danger">{{ inclusion.title }}</h4>
+                        </div>
+                        {% endfor %}
+                        <ul class="blog-info-link mt-3 mb-4">
+                            <li><a href="#"><i class="fa fa-calendar-check-o"></i> {{  hotel.timestamp|timesince}} ago </a></li>
+                            <li><a href="#"><i class="fa fa-eye"></i> {{ hotel.view_count }}</a></li>
+                        </ul>
+                        {% for city in hotel.cities.all %}
+                        <div class="container">
+                            <h6><i class="fa fa-arrow-circle-right px-2" aria-hidden="true"></i>{{ city.title }}
+                            </h6>
+                        </div>
+                        {% endfor %}
+                        <div class="container">
+                            <p class="excert">
+                                {{ hotel.overview }}
+                            </p>
+                        </div>
+                        <div class="container">
+                            <p class="excert">
+                                {{ hotel.content|safe }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation-top">
+                    <div class="navigation-area">
+                        <div class="row">
+                            {% if hotel.previous_post %}
+                            <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                                <div class="thumb">
+                                    <a href="{{ hotel.previous_post.get_absolute_url }}">
+                                        <img class="img-fluid" src="{{ hotel.previous_post.thumbnail.url }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="arrow">
+                                    <a href="{{ hotel.previous_post.get_absolute_url }}">
+                                        <span class="lnr text-white ti-arrow-left"></span>
+                                    </a>
+                                </div>
+                                <div class="detials">
+                                    <p>Prev Package</p>
+                                    <a href="{{ hotel.previous_post.get_absolute_url }}">
+                                        <h4>{{ hotel.previous_post.title }}</h4>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %} {% if hotel.next_post %}
+                            <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                                <div class="detials">
+                                    <p>Next Package</p>
+                                    <a href="{{ hotel.next_post.get_absolute_url }}">
+                                        <h4>{{ hotel.next_post.title }}</h4>
+                                    </a>
+                                </div>
+                                <div class="arrow">
+                                    <a href="{{ hotel.next_post.get_absolute_url }}">
+                                        <span class="lnr text-white ti-arrow-right"></span>
+                                    </a>
+                                </div>
+                                <div class="thumb">
+                                    <a href="{{ hotel.next_post.get_absolute_url }}">
+                                        <img class="img-fluid" src="{{ hotel.next_post.thumbnail.url }}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+    <div class="blog_right_sidebar">
+        <aside class="single_sidebar_widget search_widget">
+            <form action="{% url 'umesh:search_hotel' %}">
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <input type="text" name="q" class="form-control" placeholder='Search Keyword' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                        <div class="input-group-append">
+                            <button class="btns" type="button"><i class="ti-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+            </form>
+        </aside>
+
+        <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Inclusion</h4>
+            <ul class="list cat-list">
+                {% for inclusion in inclusion_count %}
+                <li>
+                    <a href="#" class="d-flex">
+                        <p>{{ inclusion.inclusiones__title }}</p>
+                        <p>({{ inclusion.inclusiones__title__count }})</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+        <aside class="single_sidebar_widget popular_post_widget">
+            <h3 class="widget_title">Recent Post</h3>
+            {% for hotel in most_recent %}
+            <div class="media post_item">
+                <img src="{{ hotel.thumbnail.url }}" alt="post" style="width: 140px;">
+                <div class="media-body">
+                    <a href="{{ hotel.get_absolute_url }}">
+                        <h3>{{ hotel.title }}</h3>
+                    </a>
+                    <p>{{ hotel.timestamp|timesince }} ago</p>
+                </div>
+            </div>
+            {% endfor %}
+        </aside>
+        <aside class="single_sidebar_widget tag_cloud_widget">
+            <h4 class="widget_title">Tag Clouds</h4>
+            <ul class="list">
+                {% for tag in tag_count %}
+                <li>
+                    <a href="#">{{ tag.tag }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+
+        <aside class="single_sidebar_widget instagram_feeds">
+            <h4 class="widget_title">Instagram Feeds</h4>
+            <ul class="instagram_row flex-wrap">
+                {% for hotel in instagram_feeds %}
+                <li>
+                    <a href="{{ hotel.get_absolute_url }}">
+                        <img class="img-fluid" src="{{ hotel.thumbnail.url }}" alt="">
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+
+        <aside class="single_sidebar_widget newsletter_widget">
+            <h4 class="widget_title">Newsletter</h4>
+
+            <form action="." method="POST">{% csrf_token %}
+                <div class="form-group">
+                    <input type="email" name="email" id="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                </div>
+                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Subscribe</button>
+            </form>
+        </aside>
+    </div>
+</div>
+        </div>
+    </div>
+</section>
+<!--================ Blog Area end =================-->
+
+
+{% endblock content %}

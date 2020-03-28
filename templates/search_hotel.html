@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<section class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1">
+    <div class="container mt-3">
+        <h1 class="text-center">SEARCH RESULT OF HOTEL PACKAGES</h1>
+        <ul class="list-inline text-center">
+            <li class="list-inline-item g-color-primary">
+                <a href="{% url 'umesh:home' %}" style="color: black;"><span><i class="fa fa-home"></i> Home</span></a>
+                <i class="fa fa-angle-right g-ml-7"></i>
+            </li>
+            <li class="list-inline-item g-color-primary">
+                <span>Here is the Search Result</span>
+            </li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                {% for hotel in queryset %}
+                <div class="col-lg-4  col-md-4 col-12 p-5">
+                    <a href="{{ hotel.get_absolute_url }}">
+                        <img src="{{ hotel.thumbnail.url }}" alt="" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-lg-6 col-12 offest-lg-1 p-5">
+                    <a href="{{ hotel.get_absolute_url }}">
+                        <h3>{{ hotel.title }}</h3>
+                        <p>{{ hotel.overview }}</p>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}

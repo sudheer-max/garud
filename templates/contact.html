@@ -1,0 +1,66 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+{% load crispy_forms_tags %}
+<section class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1">
+    <div class="container mt-3">
+        <h1 class="text-center">Conatct us </h1>
+        <ul class="list-inline text-center">
+            <li class="list-inline-item g-color-primary">
+                <a href="{% url 'umesh:home' %}" style="color: black;"><span><i class="fa fa-home"></i> Home</span></a>
+                <i class="fa fa-angle-right g-ml-7"></i>
+            </li>
+            <li class="list-inline-item g-color-primary">
+                <span>Contact us</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!-- ================ contact section start ================= -->
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="contact-title">{{ title }}</h2>
+            </div>
+            <div class="col-lg-8">
+            {% if confirm_message %}
+            {{ confirm_message }}
+            {% endif %}
+            {% if form %}
+                <form action="" method="POST">{% csrf_token %} {{ form|crispy }}
+                    <input type="submit" value="submit form" class="btn btn-default">
+                </form>
+                {% endif %}
+            </div>
+            <div class="col-lg-3 offset-lg-1">
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-home"></i></span>
+                    <div class="media-body">
+                        <h3>GARUD TRAVELS</h3>
+                        <p>Shop No.3, Sai Siddhi Varsha Tower, Sheetal Nagar, Station Road, Mira Road (E), Thane - 401107</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                    <div class="media-body">
+                        <h3>+91 996 729 6529</h3>
+                        <h3>+91 996 792 2371</h3>
+                        <p>Mon to sun 10.00 AM to 9.00 PM</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-email"></i></span>
+                    <div class="media-body">
+                        <h3>garudtravels2012@gmail.com</h3>
+                        <h3>info@garudtravels.in</h3>
+                        <p>Send us your query anytime!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ contact section end ================= -->
+
+
+{% endblock content %}

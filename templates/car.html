@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">CLASS</th>
+                        <th scope="col">Car Name</th>
+                        <th scope="col">A/C</th>
+                        <th scope="col">Extra Person</th>
+                        <th scope="col">Per extra hour</th>
+                        <th scope="col">Night Allowance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for car in car_list %}
+                    <tr>
+                        <th scope="row"><img src="{{ car.thumbnail.url }}" alt="" style="width: 200px;"></th>
+                        <td>{{ car.car_name }}</td>
+                        <td>{{ car.ac_rate }}</td>
+                        <td>{{ car.extra_person }}</td>
+                        <td>{{ car.extra_hour }}</td>
+                        <td>{{ car.nigth_allowance }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
